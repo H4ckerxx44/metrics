@@ -3,7 +3,8 @@
   with:
     token: MOCKED_TOKEN
     plugin_sponsors: 'yes'
-    plugin_sponsors_sections: goal
+    plugin_sponsors_sections: goal, list
+    plugin_sponsors_past: 'yes'
     use_mocked_data: 'yes'
     verify: 'yes'
 - name: 💕 GitHub Sponsors - Sponsors introduction

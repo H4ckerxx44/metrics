@@ -19,28 +19,29 @@ const __preview_templates_ = paths.join(__preview, ".templates_")
 const __preview_about = paths.join(__preview, "about/.statics")
 
 //Extract from web server
-const { conf, Templates } = await setup({ log: false })
-const templates = Object.entries(Templates).map(([name]) => ({ name, enabled: true }))
+const {conf, Templates} = await setup({log: false})
+const templates = Object.entries(Templates).map(([name]) => ({name, enabled: true}))
 const metadata = Object.fromEntries(
   Object.entries(conf.metadata.plugins)
-    .map(([key, value]) => [key, Object.fromEntries(Object.entries(value).filter(([key]) => ["name", "icon", "category", "web", "supports"].includes(key)))])
-    .map(([key, value]) => [key, key === "core" ? { ...value, web: Object.fromEntries(Object.entries(value.web).filter(([key]) => /^config[.]/.test(key)).map(([key, value]) => [key.replace(/^config[.]/, ""), value])) } : value]),
+    .map(([key, value]) => [key, Object.fromEntries(Object.entries(value).filter(([key]) => ["name", "icon", "category", "web", "supports", "scopes"].includes(key)))])
+    .map(([key, value]) => [key, key === "core" ? {...value, web: Object.fromEntries(Object.entries(value.web).filter(([key]) => /^config[.]/.test(key)).map(([key, value]) => [key.replace(/^config[.]/, ""), value]))} : value]),
 )
+const enabled = Object.entries(metadata).filter(([_name, {category}]) => category !== "core").map(([name]) => ({name, category: metadata[name]?.category ?? "community", enabled: true}))
 
 //Directories
-await fs.mkdir(__preview, { recursive: true })
-await fs.mkdir(__preview_js, { recursive: true })
-await fs.mkdir(__preview_css, { recursive: true })
-await fs.mkdir(__preview_templates, { recursive: true })
-await fs.mkdir(__preview_templates_, { recursive: true })
-await fs.mkdir(__preview_about, { recursive: true })
+await fs.mkdir(__preview, {recursive: true})
+await fs.mkdir(__preview_js, {recursive: true})
+await fs.mkdir(__preview_css, {recursive: true})
+await fs.mkdir(__preview_templates, {recursive: true})
+await fs.mkdir(__preview_templates_, {recursive: true})
+await fs.mkdir(__preview_about, {recursive: true})
 
 //Web
 fs.copyFile(paths.join(__web, "index.html"), paths.join(__preview, "index.html"))
 fs.copyFile(paths.join(__web, "favicon.png"), paths.join(__preview, ".favicon.png"))
 fs.copyFile(paths.join(__web, "opengraph.png"), paths.join(__preview, ".opengraph.png"))
 //Plugins and templates
-fs.writeFile(paths.join(__preview, ".plugins"), JSON.stringify(Object.entries(metadata).filter(([_name, { category }]) => category !== "core").map(([name]) => ({ name, enabled: false }))))
+fs.writeFile(paths.join(__preview, ".plugins"), JSON.stringify(enabled))
 fs.writeFile(paths.join(__preview, ".plugins.base"), JSON.stringify(conf.settings.plugins.base.parts))
 fs.writeFile(paths.join(__preview, ".plugins.metadata"), JSON.stringify(metadata))
 fs.writeFile(paths.join(__preview, ".templates__"), JSON.stringify(templates))
@@ -48,7 +49,7 @@ for (const template in conf.templates) {
   fs.writeFile(paths.join(__preview_templates_, template), JSON.stringify(conf.templates[template]))
   const __partials = paths.join(__templates, template, "partials")
   const __preview_partials = paths.join(__preview_templates, template, "partials")
-  await fs.mkdir(__preview_partials, { recursive: true })
+  await fs.mkdir(__preview_partials, {recursive: true})
   for (const file of await fs.readdir(__partials))
     fs.copyFile(paths.join(__partials, file), paths.join(__preview_partials, file))
 }
@@ -72,7 +73,7 @@ fs.copyFile(paths.join(__node_modules, "prismjs/components/prism-markdown.min.js
 fs.copyFile(paths.join(__node_modules, "clipboard/dist/clipboard.min.js"), paths.join(__preview_js, "clipboard.min.js"))
 //Meta
 fs.writeFile(paths.join(__preview, ".version"), JSON.stringify(`${conf.package.version}-preview`))
-fs.writeFile(paths.join(__preview, ".hosted"), JSON.stringify({ by: "metrics", link: "https://github.com/lowlighter/metrics" }))
+fs.writeFile(paths.join(__preview, ".hosted"), JSON.stringify({by: "metrics", link: "https://github.com/lowlighter/metrics"}))
 //About
 fs.copyFile(paths.join(__web, "about", "index.html"), paths.join(__preview, "about", "index.html"))
 for (const file of await fs.readdir(__web_about)) {

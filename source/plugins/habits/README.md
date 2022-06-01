@@ -1,5 +1,6 @@
 <!--header-->
 <table>
+  <tr><td colspan="2"><a href="/README.md#-plugins">← Back to plugins index</a></td></tr>
   <tr><th colspan="2"><h3>💡 Coding habits</h3></th></tr>
   <tr><td colspan="2" align="center"><p>This plugin display coding habits based on your recent activity, such as active hours and languages recently used.</p>
 </td></tr>
@@ -11,7 +12,7 @@
     <td><code>👤 Users</code> <code>👥 Organizations</code></td>
   </tr>
   <tr>
-    <td><code>🔑 (scopeless)</code> <code>read:org (optional)</code> <code>read:user (optional)</code> <code>repo (optional)</code></td>
+    <td><code>🔑 (scopeless)</code> <code>read:org (optional)</code> <code>read:user (optional)</code> <code>read:packages (optional)</code> <code>repo (optional)</code></td>
   </tr>
   <tr>
     <td colspan="2" align="center">
@@ -28,7 +29,7 @@
 <!--options-->
 <table>
   <tr>
-    <td align="center" nowrap="nowrap">Type</i></td><td align="center" nowrap="nowrap">Description</td>
+    <td align="center" nowrap="nowrap">Option</i></td><td align="center" nowrap="nowrap">Description</td>
   </tr>
   <tr>
     <td nowrap="nowrap"><h4><code>plugin_habits</code></h4></td>
@@ -90,6 +91,21 @@ Recent language activity may also displayed (it requires extras features to be e
 <b>type:</b> <code>boolean</code>
 <br>
 <b>default:</b> no<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>plugin_habits_charts_type</code></h4></td>
+    <td rowspan="2"><p>Charts display type</p>
+<ul>
+<li><code>classic</code>: <code>&lt;div&gt;</code> based charts, simple and lightweight</li>
+<li><code>chartist</code>: <code>&lt;svg&gt;</code> based charts, smooth</li>
+</ul>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><b>type:</b> <code>string</code>
+<br>
+<b>default:</b> classic<br>
+<b>allowed values:</b><ul><li>classic</li><li>chartist</li></ul></td>
   </tr>
   <tr>
     <td nowrap="nowrap"><h4><code>plugin_habits_trim</code></h4></td>

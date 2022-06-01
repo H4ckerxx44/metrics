@@ -238,6 +238,8 @@ inputs:
       GitHub supports additional emojis which are not registered in Unicode standard (:octocat:, :shipit:, :trollface:, ...)
       See full list at https://api.github.com/emojis.
 
+      This option has no effect when `token: NOT_NEEDED` is set.
+
       May increase filesize
     type: boolean
     default: yes
@@ -369,6 +371,30 @@ inputs:
     min: 0
     max: 3600
 
+  clean_workflows:
+    description: |
+      Clean previous workflows jobs
+
+      This can be used to clean up Action tabs from previous workflows runs.
+
+      Use `all` to clean up workflows runs in any state.
+
+      > ⚠️ When reporting issues, it is **required** to provide logs so it can be investigated and reproduced.
+      > Be sure to disable this option when asking for help or submitting bug reports.
+    type: array
+    format: comma-separated
+    default: ""
+    preset: no
+    example: ""
+    values:
+      - cancelled
+      - failure
+      - success
+      - skipped
+      - startup_failure
+      - timed_out
+      - all
+
   delay:
     description: |
       Job delay
@@ -378,6 +404,47 @@ inputs:
     default: 0
     min: 0
     max: 3600
+
+  quota_required_rest:
+    description: |
+      Minimum GitHub REST API requests quota required to run
+
+      Action will cancel itself without any errors if requirements are not met
+
+      This option has no effect when `token` is set to `NOT_NEEDED`
+    type: number
+    default: 200
+    min: 0
+    max: 5000
+
+  quota_required_graphql:
+    description: |
+      Minimum GitHub GraphQL API requests quota required to run
+
+      Action will cancel itself without any errors if requirements are not met
+
+      This option has no effect when `token` is set to `NOT_NEEDED`
+    type: number
+    default: 200
+    min: 0
+    max: 5000
+
+  quota_required_search:
+    description: |
+      Minimum GitHub Search API requests quota required to run
+
+      Action will cancel itself without any errors if requirements are not met
+
+      This option has no effect when `token` is set to `NOT_NEEDED`
+    type: number
+    default: 0
+    min: 0
+    max: 30
+
+  notice_releases:
+    description: Notice about new releases of metrics
+    type: boolean
+    default: yes
 
   # ====================================================================================
   # 🚧 Options below are mostly used for testing
@@ -424,7 +491,6 @@ inputs:
     description: |
       Debug flags
       - `--cakeday`: simulate registration anniversary
-      - `--hireable`: simulate "Available for hire" account setting
       - `--halloween`: enable halloween colors
       - `--error`: force render error
     type: array
@@ -432,7 +498,6 @@ inputs:
     default: ""
     values:
       - --cakeday
-      - --hireable
       - --halloween
       - --error
     testing: yes

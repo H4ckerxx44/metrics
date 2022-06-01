@@ -1,5 +1,6 @@
 <!--header-->
 <table>
+  <tr><td colspan="2"><a href="/README.md#-plugins">← Back to plugins index</a></td></tr>
   <tr><th colspan="2"><h3>🧱 Core</h3></th></tr>
   <tr><td colspan="2" align="center"><p>Global configuration and options</p>
 </td></tr>
@@ -82,7 +83,7 @@ Some presets are hosted on this repository on the [`@presets`](https://github.co
     config_presets: "@lunar-red"
 ```
 
-> ⚠️ `🔐 Tokens` and options marked with `⏯️ Cannot be preset`, as they suggest, cannot be preset and thus requires to be explicitely defined to be set.
+> ⚠️ `🔐 Tokens` and options marked with `⏯️ Cannot be preset`, as they suggest, cannot be preset and thus requires to be explicitly defined to be set.
 
 > ℹ️ Presets configurations use [schemas](https://github.com/lowlighter/metrics/tree/presets/%40schema) to ensure compatibility between format changes
 
@@ -230,6 +231,14 @@ It is possible to generate a self-contained HTML file containing `✨ Metrics in
 
 ## 🧶 Configuring output action
 
+Before configuring output action, ensure that workflows permissions are properly set.
+These can be changed either through repository settings in Actions tab:
+
+![Setting workflows permissions](/.github/readme/imgs/setup_workflow_permissions.light.png#gh-light-mode-only)
+![Setting workflows permissions](/.github/readme/imgs/setup_workflow_permissions.dark.png#gh-dark-mode-only)
+
+Or more granulary [at job or workflow level](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token).
+
 ### Using commits (default)
 
 Use `config_output: commit` to make the action directly push changes to `committer_branch` with a commit.
@@ -239,11 +248,15 @@ A custom commit message can be used through `committer_message`.
 
 *Example: push output to metrics-renders branch rather than the default branch*
 ```yaml
-- uses: lowlighter/metrics@latest
-  with:
-    output_action: commit
-    committer_branch: metrics-renders
-    committer_message: "chore: update metrics"
+metrics:
+  permissions:
+    contents: write
+  steps:
+    - uses: lowlighter/metrics@latest
+      with:
+        output_action: commit
+        committer_branch: metrics-renders
+        committer_message: "chore: update metrics"
 ```
 
 ### Using pull requests
@@ -256,15 +269,20 @@ The last step should use either `pull-request-merge`, `pull-request-squash` or `
 
 *Example: push two outputs using a merge pull request*
 ```yaml
-- uses: lowlighter/metrics@latest
-  with:
-    filename: my-metrics-0.svg
-    output_action: pull-request
+metrics:
+  permissions:
+    contents: write
+    pull-requests: write
+  steps:
+    - uses: lowlighter/metrics@latest
+      with:
+        filename: my-metrics-0.svg
+        output_action: pull-request
 
-- uses: lowlighter/metrics@latest
-  with:
-    filename: my-metrics-1.svg
-    output_action: pull-request-merge
+    - uses: lowlighter/metrics@latest
+      with:
+        filename: my-metrics-1.svg
+        output_action: pull-request-merge
 ```
 
 ### Using gists
@@ -276,10 +294,12 @@ It is required to provide a gist id to `committer_gist` option to make it work.
 
 *Example: push output to a gist*
 ```yaml
-- uses: lowlighter/metrics@latest
-  with:
-    output_action: gist
-    committer_gist: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+metrics:
+  steps:
+    - uses: lowlighter/metrics@latest
+      with:
+        output_action: gist
+        committer_gist: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ### Manual handling
@@ -289,25 +309,29 @@ They will be available under `/metrics_renders/{filename}` in the runner.
 
 *Example: generate outputs and manually push them*
 ```yaml
-- name: Checkout repository
-  uses: actions/checkout@v2
-    with:
-      fetch-depth: 0
+metrics:
+  permissions:
+    contents: write
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-- uses: lowlighter/metrics@latest
-  with:
-    output_action: none
+    - uses: lowlighter/metrics@latest
+      with:
+        output_action: none
 
-- uses: lowlighter/metrics@latest
-  run: |
-    set +e
-    git checkout metrics-renders
-    git config user.name github-actions[bot]
-    git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-    sudo mv /metrics_renders/* ./
-    git add --all
-    git commit -m "chore: push metrics"
-    git push
+    - uses: lowlighter/metrics@latest
+      run: |
+        set +e
+        git checkout metrics-renders
+        git config user.name github-actions[bot]
+        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+        sudo mv /metrics_renders/* ./
+        git add --all
+        git commit -m "chore: push metrics"
+        git push
 ```
 
 ## ♻️ Retrying automatically failed rendering and output action
@@ -377,7 +401,7 @@ On forks, this feature is disable to take into account any changes you made on i
 <!--options-->
 <table>
   <tr>
-    <td align="center" nowrap="nowrap">Type</i></td><td align="center" nowrap="nowrap">Description</td>
+    <td align="center" nowrap="nowrap">Option</i></td><td align="center" nowrap="nowrap">Description</td>
   </tr>
   <tr>
     <td nowrap="nowrap"><h4><code>token</code></h4></td>
@@ -659,6 +683,7 @@ May increase filesize.</p>
     <td rowspan="2"><p>Use GitHub custom emojis</p>
 <p>GitHub supports additional emojis which are not registered in Unicode standard (:octocat:, :shipit:, :trollface:, ...)
 See full list at <a href="https://api.github.com/emojis">https://api.github.com/emojis</a>.</p>
+<p>This option has no effect when <code>token: NOT_NEEDED</code> is set.</p>
 <p>May increase filesize</p>
 <img width="900" height="1" alt=""></td>
   </tr>
@@ -837,6 +862,25 @@ It can result in cropped or oversized outputs.</p>
 <b>default:</b> 120<br></td>
   </tr>
   <tr>
+    <td nowrap="nowrap"><h4><code>clean_workflows</code></h4></td>
+    <td rowspan="2"><p>Clean previous workflows jobs</p>
+<p>This can be used to clean up Action tabs from previous workflows runs.</p>
+<p>Use <code>all</code> to clean up workflows runs in any state.</p>
+<blockquote>
+<p>⚠️ When reporting issues, it is <strong>required</strong> to provide logs so it can be investigated and reproduced.
+Be sure to disable this option when asking for help or submitting bug reports.</p>
+</blockquote>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">⏯️ Cannot be preset<br>
+✨ On <code>master</code>/<code>main</code><br>
+<b>type:</b> <code>array</code>
+<i>(comma-separated)</i>
+<br>
+<b>allowed values:</b><ul><li>cancelled</li><li>failure</li><li>success</li><li>skipped</li><li>startup_failure</li><li>timed_out</li><li>all</li></ul></td>
+  </tr>
+  <tr>
     <td nowrap="nowrap"><h4><code>delay</code></h4></td>
     <td rowspan="2"><p>Job delay</p>
 <p>This can be used to avoid triggering GitHub abuse mechanics on large workflows</p>
@@ -849,6 +893,61 @@ It can result in cropped or oversized outputs.</p>
 ≤ 3600)</i>
 <br>
 <b>default:</b> 0<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>quota_required_rest</code></h4></td>
+    <td rowspan="2"><p>Minimum GitHub REST API requests quota required to run</p>
+<p>Action will cancel itself without any errors if requirements are not met</p>
+<p>This option has no effect when <code>token</code> is set to <code>NOT_NEEDED</code></p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><b>type:</b> <code>number</code>
+<i>(0 ≤
+𝑥
+≤ 5000)</i>
+<br>
+<b>default:</b> 200<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>quota_required_graphql</code></h4></td>
+    <td rowspan="2"><p>Minimum GitHub GraphQL API requests quota required to run</p>
+<p>Action will cancel itself without any errors if requirements are not met</p>
+<p>This option has no effect when <code>token</code> is set to <code>NOT_NEEDED</code></p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><b>type:</b> <code>number</code>
+<i>(0 ≤
+𝑥
+≤ 5000)</i>
+<br>
+<b>default:</b> 200<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>quota_required_search</code></h4></td>
+    <td rowspan="2"><p>Minimum GitHub Search API requests quota required to run</p>
+<p>Action will cancel itself without any errors if requirements are not met</p>
+<p>This option has no effect when <code>token</code> is set to <code>NOT_NEEDED</code></p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><b>type:</b> <code>number</code>
+<i>(0 ≤
+𝑥
+≤ 30)</i>
+<br>
+<b>default:</b> 0<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>notice_releases</code></h4></td>
+    <td rowspan="2"><p>Notice about new releases of metrics</p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><b>type:</b> <code>boolean</code>
+<br>
+<b>default:</b> yes<br></td>
   </tr>
   <tr>
     <td nowrap="nowrap"><h4><code>use_prebuilt_image</code></h4></td>
@@ -907,7 +1006,6 @@ This option has no effects on forks (images will always be rebuilt from Dockerfi
     <td rowspan="2"><p>Debug flags</p>
 <ul>
 <li><code>--cakeday</code>: simulate registration anniversary</li>
-<li><code>--hireable</code>: simulate &quot;Available for hire&quot; account setting</li>
 <li><code>--halloween</code>: enable halloween colors</li>
 <li><code>--error</code>: force render error</li>
 </ul>
@@ -919,7 +1017,7 @@ This option has no effects on forks (images will always be rebuilt from Dockerfi
 <b>type:</b> <code>array</code>
 <i>(space-separated)</i>
 <br>
-<b>allowed values:</b><ul><li>--cakeday</li><li>--hireable</li><li>--halloween</li><li>--error</li></ul></td>
+<b>allowed values:</b><ul><li>--cakeday</li><li>--halloween</li><li>--error</li></ul></td>
   </tr>
   <tr>
     <td nowrap="nowrap"><h4><code>debug_print</code></h4></td>

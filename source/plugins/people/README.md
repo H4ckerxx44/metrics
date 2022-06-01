@@ -1,5 +1,6 @@
 <!--header-->
 <table>
+  <tr><td colspan="2"><a href="/README.md#-plugins">← Back to plugins index</a></td></tr>
   <tr><th colspan="2"><h3>🧑‍🤝‍🧑 People plugin</h3></th></tr>
   <tr><td colspan="2" align="center"><p>This plugin can display relationships with users, such as followers, sponsors, contributors, stargazers, watchers, members, etc.</p>
 </td></tr>
@@ -11,7 +12,7 @@
     <td><code>👤 Users</code> <code>👥 Organizations</code> <code>📓 Repositories</code></td>
   </tr>
   <tr>
-    <td><code>🔑 (scopeless)</code> <code>read:org (optional)</code> <code>read:user (optional)</code> <code>repo (optional)</code></td>
+    <td><code>🔑 (scopeless)</code> <code>read:org (optional)</code> <code>read:user (optional)</code> <code>read:packages (optional)</code> <code>repo (optional)</code></td>
   </tr>
   <tr>
     <td colspan="2" align="center">
@@ -28,7 +29,7 @@
 <!--options-->
 <table>
   <tr>
-    <td align="center" nowrap="nowrap">Type</i></td><td align="center" nowrap="nowrap">Description</td>
+    <td align="center" nowrap="nowrap">Option</i></td><td align="center" nowrap="nowrap">Description</td>
   </tr>
   <tr>
     <td nowrap="nowrap"><h4><code>plugin_people</code></h4></td>
@@ -57,6 +58,19 @@
     <td nowrap="nowrap"><h4><code>plugin_people_identicons</code></h4></td>
     <td rowspan="2"><p>Toggle identicons display</p>
 <p>This can be used to mask user profile pictures for privacy</p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><b>type:</b> <code>boolean</code>
+<br>
+<b>default:</b> no<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>plugin_people_identicons_hide</code></h4></td>
+    <td rowspan="2"><p>Hide identicons display</p>
+<p>This can be used to mask user who did not setup a personal profile picture.</p>
+<p>When used with <code>plugin_people_identicons</code>, users who did not setup a personal profile picture
+will still be filtered out, but will have their picture replaced by an identicon instead.</p>
 <img width="900" height="1" alt=""></td>
   </tr>
   <tr>
@@ -168,9 +182,6 @@ with:
   repo: metrics
   plugin_people: yes
   plugin_people_types: contributors, stargazers, watchers, sponsors
-  plugin_people_sponsors_custom: >-
-    iamsainikhil, yutkat, KasparJohannesSchneider, ktnkk, tfSheol, haribo-io,
-    marcreichel
 
 ```
 <!--/examples-->

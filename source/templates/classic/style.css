@@ -197,13 +197,12 @@
   }
   .contribution .gauge text {
     fill: currentColor;
-    font-size: 12px;
-    font-size: 15px;
-    letter-spacing: -2px;
+    font-size: 13px;
   }
   .contribution .gauge {
-    margin: 0 4px;
+    margin: 0 6px;
     color: inherit;
+    transform: scale(1.4) translateY(1px);
   }
   .contribution .icon {
     fill: currentColor;
@@ -271,6 +270,18 @@
     margin-right: 6px;
   }
 
+  .footnote {
+    width: 100%;
+    justify-content: flex-end;
+    font-size: 12px;
+  }
+  .footnote.warning {
+    color: #D79533;
+  }
+  .footnote.warning svg {
+    fill: #D79533;
+  }
+
 /* Follow-up */
   .followup.legend {
     font-size: 12px;
@@ -329,15 +340,15 @@
   }
 
 /* Habits */
-  .habits {
+  .habits .facts {
     margin: 0;
     list-style-type: none;
     padding-left: 37px;
   }
 
-/* Stargazers */
+/* Chartist */
 /* purgecss ignore */
-  .stargazers .chartist .ct-post {
+  .chartist .ct-post {
     fill: rgba(127, 127, 127, 0.8) !important;
     color: rgba(127, 127, 127, 0.8) !important;
     font-size: 9px;
@@ -480,6 +491,9 @@
     line-height: 14px;
     height: 14px;
     font-weight: 600;
+  }
+  .track .name, .track .artist {
+    width: 387px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -494,9 +508,6 @@
   svg.large .tracklist {
     flex-direction: row;
     flex-wrap: wrap;
-  }
-  svg.large .track {
-    width: 50%;
   }
 
 /* Posts plugin */
@@ -827,6 +838,17 @@
     max-width: 900px;
   }
 
+/* Calendar */
+  svg.calendar {
+    margin-left: 13px;
+    margin-top: 4px;
+  }
+
+  svg.calendar text {
+    font-size: 18px;
+    fill: currentColor;
+  }
+
 /* People */
   .people {
     padding: 0 10px;
@@ -1055,12 +1077,15 @@
     border-radius: 5px;
     background-color: #7777771F;
   }
-  .sponsors .goal-text {
+  .sponsors .goal-text, .sponsors .past-text {
     display: flex;
     justify-content: space-between;
     font-style: italic;
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 4px;
+  }
+  .sponsors .past-text {
+    margin: 8px 0 2px;
   }
   .sponsors .avatar {
     margin: 2px;
@@ -1359,6 +1384,10 @@
     display: flex;
     margin-left: -12px;
   }
+  .ct-chart-pie .ct-label {
+    fill: rgba(255, 255, 255, 0.8) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
   .ct-line {
     stroke-width: 2px !important;
     stroke: #58A6FF !important;
@@ -1385,20 +1414,6 @@
   .autosize {
     width: auto;
     height: auto;
-  }
-
-/* Fade animation */
-  .af {
-    opacity: 0;
-    animation: animation-fade 1s ease forwards;
-  }
-  @keyframes animation-fade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
   }
 
 /* Twemoji and GitHub emoji */

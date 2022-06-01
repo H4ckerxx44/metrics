@@ -1,5 +1,6 @@
 <!--header-->
 <table>
+  <tr><td colspan="2"><a href="/README.md#-plugins">← Back to plugins index</a></td></tr>
   <tr><th colspan="2"><h3>⏰ WakaTime plugin</h3></th></tr>
   <tr><td colspan="2" align="center"><p>This plugin displays statistics from your <a href="https://wakatime.com">WakaTime</a> account.</p>
 </td></tr>
@@ -27,7 +28,7 @@
 <!--options-->
 <table>
   <tr>
-    <td align="center" nowrap="nowrap">Type</i></td><td align="center" nowrap="nowrap">Description</td>
+    <td align="center" nowrap="nowrap">Option</i></td><td align="center" nowrap="nowrap">Description</td>
   </tr>
   <tr>
     <td nowrap="nowrap"><h4><code>plugin_wakatime</code></h4></td>
@@ -116,6 +117,40 @@
 <b>type:</b> <code>string</code>
 <br>
 <b>default:</b> current<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>plugin_wakatime_languages_other</code></h4></td>
+    <td rowspan="2"><p>Include other languages</p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><b>type:</b> <code>boolean</code>
+<br>
+<b>default:</b> no<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>plugin_wakatime_languages_ignored</code></h4></td>
+    <td rowspan="2"><p>Ignored languages</p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">✨ On <code>master</code>/<code>main</code><br>
+<b>type:</b> <code>array</code>
+<i>(comma-separated)</i>
+<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>plugin_wakatime_repositories_visibility</code></h4></td>
+    <td rowspan="2"><p>Repositories visibility</p>
+<p>Lets you hide private repositories.</p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">✨ On <code>master</code>/<code>main</code><br>
+<b>type:</b> <code>string</code>
+<br>
+<b>default:</b> all<br>
+<b>allowed values:</b><ul><li>public</li><li>all</li></ul></td>
   </tr>
 </table>
 <!--/options-->
