@@ -1,5 +1,5 @@
 //Imports
-import faker from "@faker-js/faker"
+import { faker } from "@faker-js/faker"
 import axios from "axios"
 import fs from "fs/promises"
 import paths from "path"
@@ -15,6 +15,7 @@ export default async function({graphql, rest}) {
   if (mocked)
     return {graphql, rest}
   mocked = true
+  process.env.METRICS_MOCKED = true
   console.debug("metrics/compute/mocks > mocking")
 
   //Load mocks
