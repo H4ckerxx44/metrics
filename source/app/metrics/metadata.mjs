@@ -111,7 +111,7 @@ metadata.plugin = async function({__plugins, __templates, name, logger}) {
         if (account !== "bypass") {
           const context = q.repo ? "repository" : account
           if (!meta.supports?.includes(context))
-            throw {error: {message: `Not supported for: ${context}`, instance: new Error()}}
+            throw {error: {message: `Unsupported context ${context}`, instance: new Error()}}
         }
         //Special values replacer
         const replacer = value => {
@@ -210,6 +210,64 @@ metadata.plugin = async function({__plugins, __templates, name, logger}) {
         return result
       }
       Object.assign(meta.inputs, inputs, Object.fromEntries(Object.entries(inputs).map(([key, value]) => [metadata.to.query(key, {name}), value])))
+    }
+
+    //Extra features parser
+    {
+      meta.extras = function(input, {extras = {}, error = true}) {
+        const key = metadata.to.yaml(input, {name})
+        try {
+          //Required permissions
+          const required = inputs[key]?.extras ?? null
+          if (!required)
+            return true
+          console.debug(`metrics/extras > ${name} > ${key} > require [${required}]`)
+
+          //Legacy handling
+          const enabled = Array.isArray(extras) ? extras : (extras?.features ?? extras?.default ?? (typeof extras === "boolean" ? extras : false))
+          if (typeof enabled === "boolean") {
+            console.debug(`metrics/extras > ${name} > ${key} > extras features is set to ${enabled}`)
+            if (!enabled)
+              throw new Error()
+            return enabled
+          }
+          if (!Array.isArray(required)) {
+            console.debug(`metrics/extras > ${name} > ${key} > extras is not a permission array, skipping`)
+            return false
+          }
+
+          //Legacy options handling
+          if (!Array.isArray(enabled))
+            throw new Error(`metrics/extras > ${name} > ${key} > extras.features is not an array`)
+          if (extras.css) {
+            console.warn(`metrics/extras > ${name} > ${key} > extras.css is deprecated, use extras.features with "metrics.run.puppeteer.user.css" instead`)
+            enabled.push("metrics.run.puppeteer.user.css")
+          }
+          if (extras.js) {
+            console.warn(`metrics/extras > ${name} > ${key} > extras.js is deprecated, use extras.features with "metrics.run.puppeteer.user.js" instead`)
+            enabled.push("metrics.run.puppeteer.user.js")
+          }
+          if (extras.presets) {
+            console.warn(`metrics/extras > ${name} > ${key} > extras.presets is deprecated, use extras.features with "metrics.setup.community.presets" instead`)
+            enabled.push("metrics.setup.community.presets")
+          }
+
+          //Check permissions
+          const missing = required.filter(permission => !enabled.includes(permission))
+          if (missing.length > 0) {
+            console.debug(`metrics/extras > ${name} > ${key} > missing permissions [${missing}]`)
+            throw new Error()
+          }
+          return true
+        }
+        catch {
+          if (!error) {
+            console.debug(`metrics/extras > ${name} > ${key} > skipping (no error mode)`)
+            return false
+          }
+          throw Object.assign(new Error(`Unsupported option "${key}"`), {extras: true})
+        }
+      }
     }
 
     //Action metadata
@@ -389,8 +447,13 @@ metadata.plugin = async function({__plugins, __templates, name, logger}) {
             cell.push("🔧 For development<br>")
           if (!Object.keys(previous?.inputs ?? {}).includes(option))
             cell.push("✨ On <code>master</code>/<code>main</code><br>")
-          if (o.extras)
-            cell.push("🌐 Web instances must configure <code>settings.json</code><br>")
+          if (o.extras) {
+            cell.push("🌐 Web instances must configure <code>settings.json</code>:")
+            cell.push("<ul>")
+            for (const permission of o.extras)
+              cell.push(`<li><i>${permission}</i></li>`)
+            cell.push("</ul>")
+          }
           cell.push(`<b>type:</b> <code>${type}</code>`)
           if ("format" in o)
             cell.push(`<i>(${Array.isArray(o.format) ? o.format[0] : o.format})</i>`)
@@ -537,6 +600,14 @@ metadata.to = {
   query(key, {name = null} = {}) {
     key = key.replace(/^plugin_/, "").replace(/_/g, ".")
     return name ? key.replace(new RegExp(`^(${name}.)`, "g"), "") : key
+  },
+  yaml(key, {name = ""} = {}) {
+    const parts = []
+    if (key !== "enabled")
+      parts.unshift(key.replaceAll(".", "_"))
+    if (name)
+      parts.unshift((name === "base") ? name : `plugin_${name}`)
+    return parts.join("_")
   },
 }
 

@@ -15,12 +15,17 @@
       this.localstorage = !!(new URLSearchParams(location.search).get("localstorage"))
       //User
       const user = location.pathname.split("/").pop()
-      if ((user) && (user !== "about")) {
+      if ((user) && (!["about", "insights"].includes(user))) {
         this.user = user
         await this.search()
       }
       else {
+        const user = new URLSearchParams(location.search).get("user")
         this.searchable = true
+        if (user) {
+          this.user = user
+          this.search()
+        }
       }
       //Init
       await Promise.all([
@@ -99,7 +104,7 @@
             this.loaded = ["base", ...Object.keys(this.metrics?.rendered?.plugins ?? {})]
             return
           }
-          const {processing, ...data} = (await axios.get(`/about/query/${this.user}`)).data
+          const {processing, ...data} = (await axios.get(`/insights/query/${this.user}`)).data
           if (processing) {
             let completed = 0
             this.progress = 1 / (data.plugins.length + 1)
@@ -109,7 +114,7 @@
                 return
               do {
                 try {
-                  const {data} = await axios.get(`/about/query/${this.user}/${plugin}`)
+                  const {data} = await axios.get(`/insights/query/${this.user}/${plugin}`)
                   if (!data)
                     throw new Error(`${plugin}: no data`)
                   if (plugin === "base")
@@ -132,6 +137,7 @@
           }
           else {
             this.metrics = data
+            this.loaded = ["base", ...Object.keys(this.metrics?.rendered?.plugins ?? {})]
           }
         }
         catch (error) {
@@ -219,10 +225,13 @@
         return {login, name, avatar: this.metrics?.rendered.computed.avatar, type: this.metrics?.rendered.account}
       },
       url() {
-        return `${window.location.protocol}//${window.location.host}/about/${this.user}`
+        return `${window.location.protocol}//${window.location.host}/insights/${this.user}`
       },
       preview() {
         return /-preview$/.test(this.version)
+      },
+      beta() {
+        return /-beta$/.test(this.version)
       },
       rlreset() {
         const reset = new Date(Math.max(this.requests.graphql.reset, this.requests.rest.reset))

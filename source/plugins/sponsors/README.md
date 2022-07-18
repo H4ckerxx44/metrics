@@ -60,10 +60,10 @@
   </tr>
   <tr>
     <td nowrap="nowrap"><h4><code>plugin_sponsors_past</code></h4></td>
-    <td rowspan="2"><p>Display past sponsorships</p>
-<p>This feature requires a token from target account, as past sponsorships are gathered from sponsors activity and is private data.</p>
+    <td rowspan="2"><p>Past sponsorships</p>
+<p>A <a href="/source/plugins/core/README.md#token"><code>token</code></a> from target <a href="/source/plugins/core/README.md#user"><code>user</code></a> must be specified to use this feature, as past sponsorships are gathered from sponsors activity which is private data.</p>
 <blockquote>
-<p>⚠️ Past sponsorships does not respect sponsors privacy because of current GitHub API limitations. This may be fixed in future releases.</p>
+<p>⚠️ Past sponsorships does not respect sponsors privacy because of current GitHub API limitations. This may be fixed in a future release.</p>
 </blockquote>
 <img width="900" height="1" alt=""></td>
   </tr>
@@ -84,6 +84,17 @@
 ≤ 64)</i>
 <br>
 <b>default:</b> 24<br></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap"><h4><code>plugin_sponsors_title</code></h4></td>
+    <td rowspan="2"><p>Title caption</p>
+<img width="900" height="1" alt=""></td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">✨ On <code>master</code>/<code>main</code><br>
+<b>type:</b> <code>string</code>
+<br>
+<b>default:</b> Sponsor Me!<br></td>
   </tr>
 </table>
 <!--/options-->
