@@ -4,6 +4,8 @@ import axios from "axios"
 import processes from "child_process"
 import crypto from "crypto"
 import { minify as csso } from "csso"
+import * as d3 from "d3"
+import D3node from "d3-node"
 import emoji from "emoji-name-map"
 import { fileTypeFromBuffer } from "file-type"
 import fss from "fs"
@@ -33,7 +35,7 @@ import xmlformat from "xml-formatter"
 prism_lang()
 
 //Exports
-export { axios, emoji, fetch, fs, git, minimatch, opengraph, os, paths, processes, rss, sharp, url, util }
+export { axios, d3, D3node, emoji, fetch, fs, git, minimatch, opengraph, os, paths, processes, rss, sharp, url, util }
 
 /**Returns module __dirname */
 export function __module(module) {
@@ -267,7 +269,7 @@ export async function spawn(command, args = [], options = {}, {prefixed = true, 
   })
 }
 
-/**Check command existance */
+/**Check command existence */
 export async function which(command) {
   try {
     console.debug(`metrics/command > checking existence of ${command}`)
@@ -280,7 +282,7 @@ export async function which(command) {
   return false
 }
 
-/**Code hightlighter */
+/**Code highlighter */
 export function highlight(code, lang) {
   return lang in prism.languages ? prism.highlight(code, prism.languages[lang]) : code
 }
@@ -477,7 +479,7 @@ export const svg = {
               console.debug("metrics/svg/resize > successfully executed user javascript")
             }
             catch (error) {
-              console.debug(`an error occured while evaluating script: ${error}`)
+              console.debug(`an error occurred while evaluating script: ${error}`)
             }
           }
           //Disable animations
@@ -508,7 +510,7 @@ export const svg = {
       ))
     }
     catch (error) {
-      console.debug(`metrics/svg/resize > an error occured: ${error}`)
+      console.debug(`metrics/svg/resize > an error occurred: ${error}`)
       throw error
     }
     //Convert if required

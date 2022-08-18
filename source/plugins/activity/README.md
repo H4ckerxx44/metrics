@@ -4,6 +4,9 @@
   <tr><th colspan="2"><h3>📰 Recent activity</h3></th></tr>
   <tr><td colspan="2" align="center"><p>This plugin displays recent activity on GitHub.</p>
 </td></tr>
+  <tr><th>⚠️ Disclaimer</th><td><p>This plugin is not affiliated, associated, authorized, endorsed by, or in any way officially connected with <a href="https://github.com">GitHub</a>.
+All product and company names are trademarks™ or registered® trademarks of their respective holders.</p>
+</td></tr>
   <tr>
     <th rowspan="3">Supported features<br><sub><a href="metadata.yml">→ Full specification</a></sub></th>
     <td><a href="/source/templates/classic/README.md"><code>📗 Classic template</code></a> <a href="/source/templates/markdown/README.md"><code>📒 Markdown template</code></a> <a href="/source/templates/repository/README.md"><code>📘 Repository template</code></a></td>
@@ -138,7 +141,7 @@
 <li><code>release</code>: Publication of new releases</li>
 <li><code>review</code>: Review of pull requests</li>
 <li><code>comment</code>: Comments on commits, issues and pull requests</li>
-<li><code>wiki</code>: Edition of wiki pages</li>
+<li><code>wiki</code>: Changes of wiki pages</li>
 <li><code>fork</code>: Forking of repositories</li>
 <li><code>star</code>: Starring of repositories</li>
 <li><code>public</code>: Repositories made public</li>

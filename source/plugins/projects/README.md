@@ -3,9 +3,9 @@
   <tr><td colspan="2"><a href="/README.md#-plugins">← Back to plugins index</a></td></tr>
   <tr><th colspan="2"><h3>🗂️ GitHub projects</h3></th></tr>
   <tr><td colspan="2" align="center"><p>This plugin displays progress of profile and repository projects.</p>
-<blockquote>
-<p>ℹ️ This plugin currently only supports <a href="https://docs.github.com/en/issues/organizing-your-work-with-project-boards/managing-project-boards/about-project-boards">GitHub projects boards</a> and not <a href="https://docs.github.com/en/issues/trying-out-the-new-projects-experience/about-projects">GitHub projects (beta)</a></p>
-</blockquote>
+</td></tr>
+  <tr><th>⚠️ Disclaimer</th><td><p>This plugin is not affiliated, associated, authorized, endorsed by, or in any way officially connected with <a href="https://github.com">GitHub</a>.
+All product and company names are trademarks™ or registered® trademarks of their respective holders.</p>
 </td></tr>
   <tr>
     <th rowspan="3">Supported features<br><sub><a href="metadata.yml">→ Full specification</a></sub></th>
@@ -15,7 +15,7 @@
     <td><code>👤 Users</code> <code>👥 Organizations</code> <code>📓 Repositories</code></td>
   </tr>
   <tr>
-    <td><code>🔑 (scopeless)</code> <code>🔑 public_repo</code> <code>read:org (optional)</code> <code>read:user (optional)</code> <code>read:packages (optional)</code> <code>repo (optional)</code></td>
+    <td><code>🔑 (scopeless)</code> <code>🔑 public_repo</code> <code>🔑 read:project</code> <code>read:org (optional)</code> <code>read:user (optional)</code> <code>read:packages (optional)</code> <code>repo (optional)</code></td>
   </tr>
   <tr>
     <td colspan="2" align="center">
@@ -61,6 +61,9 @@
     <td nowrap="nowrap"><h4><code>plugin_projects_repositories</code></h4></td>
     <td rowspan="2"><p>Featured repositories projects</p>
 <p>Use the following syntax for each project <code>:user/:repo/projects/:project_id</code></p>
+<blockquote>
+<p>ℹ️ <a href="https://docs.github.com/en/issues/trying-out-the-new-projects-experience/about-projects">GitHub projects (beta)</a> needs to use the same syntax as above and repository must specified repository must be linked to given project.</p>
+</blockquote>
 <img width="900" height="1" alt=""></td>
   </tr>
   <tr>

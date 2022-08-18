@@ -4,6 +4,9 @@
   <tr><th colspan="2"><h3>🏅 Repository contributors</h3></th></tr>
   <tr><td colspan="2" align="center"><p>This plugin display repositories contributors from a commit range along with additional stats.</p>
 </td></tr>
+  <tr><th>⚠️ Disclaimer</th><td><p>This plugin is not affiliated, associated, authorized, endorsed by, or in any way officially connected with <a href="https://github.com">GitHub</a>.
+All product and company names are trademarks™ or registered® trademarks of their respective holders.</p>
+</td></tr>
   <tr>
     <th rowspan="3">Supported features<br><sub><a href="metadata.yml">→ Full specification</a></sub></th>
     <td><a href="/source/templates/repository/README.md"><code>📘 Repository template</code></a></td>
@@ -104,32 +107,32 @@
     <td nowrap="nowrap"><h4><code>plugin_contributors_categories</code></h4></td>
     <td rowspan="2"><p>Contribution categories</p>
 <p>This option requires <a href="/source/plugins/contributors/README.md#plugin_contributors_sections"><code>plugin_contributors_sections</code></a> to have <code>categories</code> in it to be effective.
-Pass a JSON object mapping category with fileglobs</p>
+Pass a JSON object mapping category with file globs</p>
 <img width="900" height="1" alt=""></td>
   </tr>
   <tr>
     <td nowrap="nowrap">🌐 Web instances must configure <code>settings.json</code>:
 <ul>
-<li><i>metrics.runner.tempdir</i></li>
-<li><i>metrics.runner.git</i></li>
+<li><i>metrics.run.tempdir</i></li>
+<li><i>metrics.run.git</i></li>
 </ul>
 <b>type:</b> <code>json</code>
 <br>
-<b>default:</b> {
+<b>default:</b> <details><summary>→ Click to expand</summary><pre language="json"><code>{
   "📚 Documentation": ["README.md", "docs/**"],
   "💻 Code": ["source/**", "src/**"],
   "#️⃣ Others": ["*"]
 }
-<br></td>
+</code></pre></details><br></td>
   </tr>
 </table>
 <!--/options-->
 
 ## 🗂️ Setting up contribution categories
 
-Pass a JSON object to `plugin_contributors_categories` with categories names as keys and arrays of fileglobs as values to configure contributions categories.
+Pass a JSON object to `plugin_contributors_categories` with categories names as keys and arrays of file globs as values to configure contributions categories.
 
-Each modified file by a contributor matching a fileglob will add them in said category.
+Each modified file by a contributor matching a file glob will add them in said category.
 
 > 💡 File matching respect keys order
 

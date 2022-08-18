@@ -7,7 +7,7 @@ Plugins provide additional content and lets you customize rendered metrics.
 * **Core plugins**
   * [🗃️ Base content <sub>`base`</sub>](/source/plugins/base/README.md)
   * [🧱 Core <sub>`core`</sub>](/source/plugins/core/README.md)
-* **Github plugins**
+* **GitHub plugins**
   * [🏆 Achievements <sub>`achievements`</sub>](/source/plugins/achievements/README.md)
   * [📰 Recent activity <sub>`activity`</sub>](/source/plugins/activity/README.md)
   * [📆 Commit calendar <sub>`calendar`</sub>](/source/plugins/calendar/README.md)
@@ -29,10 +29,10 @@ Plugins provide additional content and lets you customize rendered metrics.
   * [📓 Featured repositories <sub>`repositories`</sub>](/source/plugins/repositories/README.md)
   * [🌇 GitHub Skyline <sub>`skyline`</sub>](/source/plugins/skyline/README.md)
   * [💕 GitHub Sponsors <sub>`sponsors`</sub>](/source/plugins/sponsors/README.md)
-  * [✨ Stargazers over last weeks <sub>`stargazers`</sub>](/source/plugins/stargazers/README.md)
+  * [✨ Stargazers <sub>`stargazers`</sub>](/source/plugins/stargazers/README.md)
   * [💫 Star lists <sub>`starlists`</sub>](/source/plugins/starlists/README.md)
   * [🌟 Recently starred repositories <sub>`stars`</sub>](/source/plugins/stars/README.md)
-  * [💭 GitHub Community Support <sub>`support`</sub>](/source/plugins/support/README.md)
+  * [💭 GitHub Community Support <sub>`support`</sub>](/source/plugins/support/README.md) <sub>`⚠️ deprecated`</sub>
   * [📌 Starred topics <sub>`topics`</sub>](/source/plugins/topics/README.md)
   * [🧮 Repositories traffic <sub>`traffic`</sub>](/source/plugins/traffic/README.md)
 * **Social plugins**
@@ -52,3 +52,4 @@ Plugins provide additional content and lets you customize rendered metrics.
   * [💩 PoopMap plugin <sub>`poopmap`</sub>](/source/plugins/community/poopmap/README.md) by [@matievisthekat](https://github.com/matievisthekat)
   * [📸 Website screenshot <sub>`screenshot`</sub>](/source/plugins/community/screenshot/README.md) by [@lowlighter](https://github.com/lowlighter)
   * [💹 Stock prices <sub>`stock`</sub>](/source/plugins/community/stock/README.md) by [@lowlighter](https://github.com/lowlighter)
+
